@@ -1,0 +1,9 @@
+[global_config]
+  suppress_multiple_term_dialog = True
+[keybindings]
+[profiles]
+  [[default]]
+    use_system_font = False
+    font = Monospace 10
+    background_image = None
+[plugins]
