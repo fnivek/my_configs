@@ -22,7 +22,6 @@ if dein#load_state('/home/fnivek/.local/share/dein/')
   call dein#add('vim-airline/vim-airline')
   call dein#add('airblade/vim-gitgutter')
   call dein#add('morhetz/gruvbox')
-  call dein#add('joshdick/onedark.vim')
 
   " You can specify revision/branch/tag.
   call dein#add('Shougo/deol.nvim', { 'rev': 'a1b5108fd' })
@@ -46,7 +45,7 @@ syntax enable
 " Plugin settings
 set termguicolors
 set background=dark
-colorscheme onedark
+colorscheme gruvbox
 
 " Show lines number
 set number
