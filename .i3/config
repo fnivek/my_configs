@@ -8,6 +8,9 @@ set $mod Mod4
 # Move workspace to left monitor (loops)
 bindsym $mod+m move workspace to output left
 
+# Toggle display mode
+bindsym $mod+p exec --no-startup-id /home/fnivek/.i3/scripts/toggle-displays
+
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 1 +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 1 -5% #decrease sound volume
