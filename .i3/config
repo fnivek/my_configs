@@ -32,14 +32,15 @@ bindsym XF86AudioPrev exec playerctl previous
 # System Shutdown Loop
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 # set $lock_image /home/karahm/Desktop/_images/mountains.jpg
+set $system_script /home/fnivek/.i3/scripts/system
 mode "$mode_system" {
     # bindsym l exec --no-startup-id i3lock -i $lock_image, mode "default"
-    bindsym l exec --no-startup-id i3lock -c 111111, mode "default"
-    bindsym e exec --no-startup-id i3-msg exit, mode "default"
-    bindsym s exec --no-startup-id systemctl suspend && i3lock -c 111111, mode "default"
-    bindsym h exec --no-startup-id systemctl hibernate && i3lock -c 111111, mode "default"
-    bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
+    bindsym l exec --no-startup-id "$system_script lock", mode "default"
+    bindsym e exec --no-startup-id "$system_script logout", mode "default"
+    bindsym s exec --no-startup-id "$system_script suspend", mode "default"
+    bindsym h exec --no-startup-id "$system_script hibernate", mode "default"
+    bindsym r exec --no-startup-id "$system_script reboot", mode "default"
+    bindsym Shift+s exec --no-startup-id "$system_script shutdown", mode "default"
 
     # Back to normal: Enter or Escape
     bindsym Return mode "default"
