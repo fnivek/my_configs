@@ -16,6 +16,18 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 1 +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 1 -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle # mute sound
 
+set $mode_audio Audio (Left) Volume Down (Right) Volume Up (m) mute
+mode "$mode_audio" {
+    bindsym m exec --no-startup-id pactl set-sink-mute 1 toggle # mute sound
+    bindsym Left exec --no-startup-id pactl -- set-sink-volume 1 -5% #decrease sound volume
+    bindsym Right exec --no-startup-id pactl -- set-sink-volume 1 +5% #increase sound volume
+
+    # Back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+a mode $mode_audio
+
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
