@@ -1,0 +1,15 @@
+#!/bin/bash
+# Get the device id
+id="$(xinput list "SynPS/2 Synaptics TouchPad" | head -n 1 | awk '{print $4}')"
+id="${id:3}"
+
+# Get the device state
+state=`xinput list-props "${id}" | grep "Device Enabled" | grep -o "[01]$"`
+
+# Toggle the device
+if [ "${state}" == '1' ]; then
+  xinput disable "${id}"
+else
+  xinput enable "${id}"
+fi
+
