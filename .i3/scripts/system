@@ -3,6 +3,10 @@ lock() {
     i3lock -c 000000 -i ~/.i3/resources/i3lockscreen.png
 }
 
+# PID=$(pgrep i3 | head -n 1)
+# dbus=$(grep -z DBUS_SESSION_BUS_ADDRESS /proc/$PID/environ|cut -d= -f2-)
+# export DBUS_SESSION_BUS_ADDRESS=$dbus
+
 case "$1" in
     lock)
         lock
