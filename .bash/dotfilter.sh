@@ -1,3 +1,1 @@
-# dotfilter
-export PATH=$PATH:$HOME/.dotfiles/bin
-
+function dot() { $HOME/.dotfiles/bin/dot $@; }
