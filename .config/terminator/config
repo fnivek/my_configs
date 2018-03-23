@@ -1,9 +1,19 @@
 [global_config]
   suppress_multiple_term_dialog = True
 [keybindings]
+  group_all = None
+  group_all_toggle = <Super>g
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
 [profiles]
   [[default]]
-    use_system_font = False
+    cursor_color = "#aaaaaa"
     font = Monospace 10
-    background_image = None
-[plugins]
+    use_system_font = False
