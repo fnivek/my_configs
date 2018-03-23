@@ -2,6 +2,23 @@
 EXTERNAL_OUTPUT="HDMI-0"
 INTERNAL_OUTPUT="DP-0"
 
+switch_to() {
+    case "$1" in
+        all)
+            xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --auto --left-of $INTERNAL_OUTPUT
+            ;;
+        clones)
+            xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --auto --same-as $INTERNAL_OUTPUT
+            ;;
+        internal)
+            xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --off
+            ;;
+        external)
+            xrandr --output $INTERNAL_OUTPUT --off --output $EXTERNAL_OUTPUT --auto
+            ;;
+    esac
+}
+
 # if we don't have a file, start at zero
 if [ ! -f "/tmp/monitor_mode.dat" ] ; then
   monitor_mode="all"
@@ -11,17 +28,34 @@ else
   monitor_mode=`cat /tmp/monitor_mode.dat`
 fi
 
-if [ $monitor_mode = "all" ]; then
-        monitor_mode="EXTERNAL"
-        xrandr --output $INTERNAL_OUTPUT --off --output $EXTERNAL_OUTPUT --auto
-elif [ $monitor_mode = "EXTERNAL" ]; then
-        monitor_mode="INTERNAL"
-        xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --off
-elif [ $monitor_mode = "INTERNAL" ]; then
-        monitor_mode="CLONES"
-        xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --auto --same-as $INTERNAL_OUTPUT
-else
-        monitor_mode="all"
-        xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --auto --left-of $INTERNAL_OUTPUT
-fi
+case "$1" in
+    toggle)
+        if [ $monitor_mode = "all" ]; then
+                monitor_mode="external"
+        elif [ $monitor_mode = "external" ]; then
+            monitor_mode="internal"
+        elif [ $monitor_mode = "internal" ]; then
+            monitor_mode="clones"
+        else
+            monitor_mode="all"
+        fi
+        switch_to "${monitor_mode}"
+        ;;
+    all)
+        switch_to all
+        ;;
+    clones)
+        switch_to clones
+        ;;
+    internal)
+        switch_to internal
+        ;;
+    external)
+        switch_to external
+        ;;
+    *)
+        echo "Usage: $0 {toggle|all|clones|internal|external}"
+        exit 2
+        ;;
+esac
 echo "${monitor_mode}" > /tmp/monitor_mode.dat

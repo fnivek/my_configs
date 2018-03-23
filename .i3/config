@@ -11,11 +11,31 @@ exec --no-startup-id i3-msg 'workspace 2; exec /opt/sublime_text/sublime_text'
 exec --no-startup-id i3-msg 'workspace 3; exec /usr/bin/firefox'
 exec --no-startup-id /usr/bin/nm-applet
 
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
 # Move workspace to left monitor (loops)
 bindsym $mod+m move workspace to output left
 
 # Toggle display mode
-bindsym $mod+p exec --no-startup-id /home/fnivek/.i3/scripts/toggle-displays
+set $display_script /home/fnivek/.i3/scripts/toggle-displays
+bindsym $mod+p exec --no-startup-id "$display_script toggle"
+set $mode_display Display (t) toggle (a) all (c) clones (i) internal (e) external
+mode "$mode_display" {
+    bindsym t exec --no-startup-id "$display_script toggle", mode default
+    bindsym a exec --no-startup-id "$display_script all", mode default
+    bindsym c exec --no-startup-id "$display_script clones", mode default
+    bindsym i exec --no-startup-id "$display_script internal", mode default
+    bindsym e exec --no-startup-id "$display_script external", mode default
+
+    # Back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+P mode $mode_display
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 1 +5% #increase sound volume
