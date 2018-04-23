@@ -6,10 +6,18 @@ id="${id:3}"
 # Get the device state
 state=`xinput list-props "${id}" | grep "Device Enabled" | grep -o "[01]$"`
 
-# Toggle the device
-if [ "${state}" == '1' ]; then
-  xinput disable "${id}"
-else
-  xinput enable "${id}"
-fi
-
+case "$1" in
+  1|enable)
+    xinput enable "${id}"
+    ;;
+  0|disable)
+    xinput disable "${id}"
+    ;;
+  *)
+    # Toggle the device
+    if [ "${state}" == '1' ]; then
+      xinput disable "${id}"
+    else
+      xinput enable "${id}"
+    fi
+esac

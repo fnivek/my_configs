@@ -6,6 +6,7 @@
 set $mod Mod4
 
 # Startup applications
+exec --no-startup-id "/home/fnivek/.i3/scripts/toggle-touchpad disable"
 exec --no-startup-id i3-msg 'workspace 1; exec terminator'
 exec --no-startup-id i3-msg 'workspace 2; exec /opt/sublime_text/sublime_text'
 exec --no-startup-id i3-msg 'workspace 3; exec /usr/bin/firefox'
