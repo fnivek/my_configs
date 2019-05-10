@@ -17,5 +17,5 @@
 
         last = !"git lg3-specific -1 HEAD --numstat"
 [core]
-        editor = nvim
+        editor = vim
         autocrlf = input
