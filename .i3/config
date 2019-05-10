@@ -7,16 +7,27 @@ set $mod Mod4
 
 # Startup applications
 exec --no-startup-id "/home/fnivek/.i3/scripts/toggle-touchpad disable"
-exec --no-startup-id i3-msg 'workspace 1; exec terminator'
 exec --no-startup-id i3-msg 'workspace 2; exec /opt/sublime_text/sublime_text'
-exec --no-startup-id i3-msg 'workspace 3; exec /usr/bin/google-chrome'
+exec --no-startup-id i3-msg 'workspace 1; exec /usr/bin/google-chrome'
 exec --no-startup-id /usr/bin/nm-applet
 
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
 
 # Show the first scratchpad window
-bindsym $mod+minus scratchpad show
+set $mode_scratchpad Todoist (-) term (Return) comms (c)
+mode "$mode_scratchpad" {
+    bindsym minus [instance="google-chrome" title=".*Todoist.*"] scratchpad show, mode default
+    bindsym Return [instance="terminator"] scratchpad show, mode default
+    bindsym c [instance="google-chrome" title="?!.*Todoist.*"] scratchpad show, mode default
+
+    # Back to normal: Enter or Escape
+    bindsym Escape mode "default"
+}
+bindsym $mod+minus mode $mode_scratchpad
+
+# Add a terminal scratchpad
+# bindsym $mod+Shift+t [title="^Term ::"] scratchpad show
 
 # Move workspace to left monitor (loops)
 bindsym $mod+m move workspace to output left
@@ -43,11 +54,12 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 1 +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 1 -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle # mute sound
 
-set $mode_audio Audio (Left) Volume Down (Right) Volume Up (m) mute
+set $mode_audio Audio (Left) Volume Down (Right) Volume Up (m) mute (r) reset
 mode "$mode_audio" {
-    bindsym m exec --no-startup-id pactl set-sink-mute 1 toggle # mute sound
-    bindsym Left exec --no-startup-id pactl -- set-sink-volume 1 -5% #decrease sound volume
-    bindsym Right exec --no-startup-id pactl -- set-sink-volume 1 +5% #increase sound volume
+    bindsym m exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+    bindsym Left exec --no-startup-id pactl -- set-sink-volume 0 -5% #decrease sound volume
+    bindsym Right exec --no-startup-id pactl -- set-sink-volume 0 +5% #increase sound volume
+    bindsym r exec --no-startup-id pulseaudio -k && pulseaudio -D
 
     # Back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -107,7 +119,7 @@ bindsym Print exec --no-startup-id /usr/bin/shutter
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 12
+font pango:monospace 4
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod

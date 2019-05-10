@@ -8,7 +8,7 @@ switch_to() {
             xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --auto --left-of $INTERNAL_OUTPUT
             ;;
         clones)
-            xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --auto --same-as $INTERNAL_OUTPUT
+            xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --auto --same-as $INTERNAL_OUTPUT 
             ;;
         internal)
             xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --off
