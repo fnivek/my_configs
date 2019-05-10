@@ -12,34 +12,30 @@
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
+      . "$HOME/.bashrc"
     fi
 fi
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
+  add_path "${HOME}/bin"
 fi
 
 # Include scripts bin
 if [ -d "/opt/scripts/bin" ] ; then
-  PATH="/opt/scripts/bin:$PATH"
+  add_path "/opt/scripts/bin"
 fi
 
 # Include go in path
 if [ -d "/usr/local/go/bin" ] ; then
-  PATH="/usr/local/go/bin:$PATH"
+  add_path "/usr/local/go/bin"
 fi
+
 if [ -d "$HOME/go/bin/" ] ; then
-  PATH="$HOME/go/bin:$PATH"
+  add_path "$HOME/go/bin"
 fi
 
 # dotfilter
 if [ -d "$HOME/.dotfiles/bin" ] ; then
-  PATH="$HOME/.dotfiles/bin:$PATH"
-fi
-
-# Fix matlab
-if [ -d "/usr/local/MATLAB/R2016b/sys/opengl/lib/glnxa64" ] ; then
-  PATH="/usr/local/MATLAB/R2016b/sys/opengl/lib/glnxa64:$PATH"
+  add_path "$HOME/.dotfiles/bin"
 fi
