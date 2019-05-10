@@ -5,3 +5,8 @@ I am using [dotfiler](https://github.com/svetlyak40wt/dotfiler) to manage my dot
 
 ## List of configs
 i3.config - configurations for my i3 window manager
+
+## Install
+* Add a chron job for ~/.i3/scripts/bat-monitor
+* Install backlight
+* TODO
