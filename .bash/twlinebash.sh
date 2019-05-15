@@ -24,8 +24,12 @@ function parse_git_branch {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
   PS_BRANCH="(git ${ref#refs/heads/}) "
 }
-PROMPT_COMMAND=parse_git_branch
+function parse_conda_env {
+  CONDA_ENV="(conda $(conda info | awk 'NR==2' | awk '{print substr($4,0); }'))"
+}
+PROMPT_COMMAND="parse_git_branch && parse_conda_env"
 PS_INFO="$GREEN\u@\h$RESET:$BLUE\w"
 PS_GIT="$YELLOW\$PS_BRANCH"
+PS_CONDA="$YELLOW\$CONDA_ENV"
 PS_TIME="\[\033[\$((COLUMNS-10))G\] $RED[\t]"
-export PS1="\${PS_FILL}\[\033[0G\]${PS_INFO} ${PS_GIT}${PS_TIME}\n${RESET}\$ "
+export PS1="\${PS_FILL}\[\033[0G\]${PS_INFO} ${PS_CONDA} ${PS_GIT} ${PS_TIME}\n${RESET}\$ "
