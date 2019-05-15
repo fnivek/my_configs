@@ -16,3 +16,5 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# Fix gsettings error
+export GIO_EXTRA_MODULES=/usr/lib/x86_64-linux-gnu/gio/modules/
