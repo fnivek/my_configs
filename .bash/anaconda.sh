@@ -18,3 +18,6 @@ unset __conda_setup
 
 # Fix gsettings error
 export GIO_EXTRA_MODULES=/usr/lib/x86_64-linux-gnu/gio/modules/
+
+# Remove the pythonpath env var
+unset PYTHONPATH
