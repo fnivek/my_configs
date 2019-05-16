@@ -18,16 +18,16 @@ function parse_git_branch {
     PS_BRANCH="(svn r$(svn info|awk '/Revision/{print $2}'))"
     return
   elif [ -f _FOSSIL_ -o -f .fslckout ]; then
-    PS_BRANCH="(fossil $(fossil status|awk '/tags/{print $2}')) "
+    PS_BRANCH="(fossil $(fossil status|awk '/tags/{print $2}'))"
     return
   fi
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-  PS_BRANCH="(git ${ref#refs/heads/}) "
+  PS_BRANCH="(git ${ref#refs/heads/})"
 }
 function parse_conda_env {
   CONDA_ENV="(conda $(conda info | awk 'NR==2' | awk '{print substr($4,0); }'))"
 }
-PROMPT_COMMAND="parse_git_branch && parse_conda_env"
+PROMPT_COMMAND="parse_conda_env && parse_git_branch"
 PS_INFO="$GREEN\u@\h$RESET:$BLUE\w"
 PS_GIT="$YELLOW\$PS_BRANCH"
 PS_CONDA="$YELLOW\$CONDA_ENV"
