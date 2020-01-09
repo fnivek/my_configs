@@ -4,15 +4,18 @@
 		"linearization",
 		"Kalman"
 	],
+	"ensure_newline_at_eof_on_save": true,
 	"font_size": 14,
 	"ignored_packages":
 	[
 		"GitGutter",
+		"Six",
+		"SublimeLinter-clang",
 		"Vintage"
 	],
 	"rulers":
 	[
-		100
+		120
 	],
 	"tab_size": 2,
 	"translate_tabs_to_spaces": true
