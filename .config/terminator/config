@@ -9,6 +9,7 @@
     background_image = None
   [[float]]
     background_darkness = 0.9
+    background_image = None
     background_type = transparent
 [layouts]
   [[default]]
