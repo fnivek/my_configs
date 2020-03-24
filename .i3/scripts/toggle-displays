@@ -1,6 +1,6 @@
 #!/bin/bash
 EXTERNAL_OUTPUT="HDMI-0"
-INTERNAL_OUTPUT="DP-0"
+INTERNAL_OUTPUT="DP-2"
 
 switch_to() {
     case "$1" in
