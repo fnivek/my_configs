@@ -1,0 +1,17 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"All Autocomplete",
+		"Clang Format",
+		"Dockerfile Syntax Highlighting",
+		"DoxyDoxygen",
+		"LaTeXTools",
+		"myPDDL",
+		"Package Control",
+		"TrailingSpaces"
+	]
+}

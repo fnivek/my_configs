@@ -1,0 +1,44 @@
+// Settings in here override those in "${packages}/DoxyDoxygen/Doxy.sublime-settings",
+// and are overridden in turn by syntax-specific settings.
+{
+  "profiles": [
+    {
+      "languages":  [ "python", "cython" ],
+      "parsers":    [ "LanguagePython" ],
+      "doc_styles": [ "Doxygen" ]// or "Doxygen", ApiDoc", "Sphinx" (you may consider Breathe's Doc)
+    }
+  ],
+  // List of possible styles for comments (first match is better).
+  "preferred_comments_styles": [
+      [
+          "/**",
+          " *"
+      ],
+      [
+          ["/*", "-", "*//**"],   // <=> /*-------------------*//**
+          " *"
+      ],
+      [
+          ["//", "-"],            // <=> //------------------------
+          "///"
+      ],
+      // [
+      //     [ "//", "/", "" ],
+      //     [ "//", "/", " ", " ", "/", "//" ],
+      //     [ "", "/", "//" ]
+      // ],
+      [
+          "\"\"\"!",            // Python docString (comment it if you prefer regular comments)
+          "",
+          "\"\"\""
+      ],
+      [
+          "##",
+          "##"
+      ],
+      [
+          ["#", "-"],             // <=> #-------------------------
+          "##"
+      ]
+  ]
+}
