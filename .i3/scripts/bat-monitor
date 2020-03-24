@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 #############################################
 # This is a simple battery warning script.  #
@@ -61,13 +61,13 @@ FULL=`grep "POWER_SUPPLY_CHARGE_FULL_DESIGN" $ACPI_PATH/uevent | cut -d= -f2`
 PERCENT=`echo $(( $REM * 100 / $FULL ))`
 
 # set energy limit in percent, where warning should be displayed
-WARN_LIMIT="15"
+WARN_LIMIT="20"
 
 # Suspend limit
-SUSPEND_LIMIT="10"
+SUSPEND_LIMIT="15"
 
 # Suspend command
-SUSPEND_CMD="$HOME/.i3/scripts/system suspend"
+SUSPEND_CMD="bash /home/fnivek/.dotfiles/my_configs/.i3/scripts/system suspend"
 
 # set error message
 MESSAGE="Warning power is ${PERCENT} will suspend at ${SUSPEND_LIMIT}!!!"
@@ -76,14 +76,14 @@ MESSAGE="Warning power is ${PERCENT} will suspend at ${SUSPEND_LIMIT}!!!"
 # if battery is discharging
 if [ "$STAT" == "Discharging" ]; then
   if [ $PERCENT -le "$(echo $WARN_LIMIT)" ] && [ $PERCENT -gt "$(echo $SUSPEND_LIMIT)" ]; then
-    DISPLAY=:0.0 /usr/bin/i3-nagbar -m "$(echo $MESSAGE)"
+    DISPLAY=:1 /usr/bin/i3-nagbar -t warning -m "$(echo $MESSAGE)"
   elif [ $PERCENT -le "$(echo $SUSPEND_LIMIT)" ]; then
     # dbus_session_file=~/.dbus/session-bus/$(cat /var/lib/dbus/machine-id)-0
     # if [ -e "$dbus_session_file" ]; then
     #   . "$dbus_session_file"
     #   export DBUS_SESSION_BUS_ADDRESS DBUS_SESSION_BUS_PID
     # fi
-    # DISPLAY=:0.0 /usr/bin/i3-nagbar -m "$(echo $MESSAGE $DBUS_SESSION_BUS_ADDRESS)"
+    # DISPLAY=:1 /usr/bin/i3-nagbar -m "$(echo $MESSAGE $DBUS_SESSION_BUS_ADDRESS)"
     $SUSPEND_CMD
   fi
 fi
