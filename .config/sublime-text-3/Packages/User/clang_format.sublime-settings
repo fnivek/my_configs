@@ -1,3 +1,5 @@
 {
-	"style": "Google"
+	"binary": "clang-format-9",
+	"format_on_save": true,
+	"style": "File"
 }

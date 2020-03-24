@@ -12,6 +12,8 @@
 		"LaTeXTools",
 		"myPDDL",
 		"Package Control",
+		"SublimeLinter",
+		"SublimeLinter-flake8",
 		"TrailingSpaces"
 	]
 }
