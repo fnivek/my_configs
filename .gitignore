@@ -8,6 +8,7 @@
 !.config/sublime-text-3/Packages/User
 .config/sublime-text-3/Packages/User/*
 !.config/sublime-text-3/Packages/User/*.sublime-settings
+.i3/resources/workspaces.txt
 
 ###################################
 # Vim

@@ -1,0 +1,108 @@
+#!/usr/bin/env python
+
+import argparse
+import os
+import sys
+import json
+import subprocess
+
+
+def parse_args():
+    """
+    Parse input arguments
+    """
+    parser = argparse.ArgumentParser(description='Change the workspace')
+
+    # Main arguments, used for paper's experiments
+    parser.add_argument('workspace', type=str, help='name of the workspace to goto')
+    parser.add_argument('-m', '--move', action='store_true', help='move the focus window')
+    parser.add_argument('-f', '--follow', action='store_true',
+                        help='if moving then follow the moved window')
+
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+    # Workspace files
+    workspace_file = "/home/fnivek/.i3/resources/workspaces.txt"
+    workspaces = []
+    with open(workspace_file) as file:
+        workspaces = [line.strip() for line in file]
+
+    # Get active workspaces and sort them
+    active_workspaces = json.loads(subprocess.check_output(['i3-msg', '-t', 'get_workspaces']))
+    active_dict = {}
+    for elem in active_workspaces:
+        name = elem['name']
+        try:
+            number, workspace = name.split(':')
+        except Exception:
+            number = name
+            workspace = ''
+        workspace = str(workspace)
+        number = int(number)
+        try:
+            active_dict[workspace].append(number)
+        except KeyError:
+            active_dict[workspace] = [number]
+    for value in active_dict.values():
+        value.sort()
+
+    # Get current workspace
+    current_workspace = None
+    for elem in active_workspaces:
+        if elem['focused']:
+            current_workspace = elem['name']
+
+    # Get number and name
+    try:
+        number, workspace = current_workspace.split(':')
+    except Exception:
+        number = current_workspace
+        workspace = ''
+    number = int(number)
+    workspace = str(workspace)
+
+    # Pars args
+    args = parse_args()
+
+    # Handle previous
+    if args.workspace == 'prev':
+        index = active_dict[workspace].index(number) - 1
+        args.workspace = '{}:{}'.format(active_dict[workspace][index], workspace)
+        if args.workspace[-1] == ':':
+            args.workspace = args.workspace[:-1]
+    # Handle next
+    elif args.workspace == 'next':
+        index = (active_dict[workspace].index(number) + 1) % len(active_dict[workspace])
+        args.workspace = '{}:{}'.format(active_dict[workspace][index], workspace)
+        if args.workspace[-1] == ':':
+            args.workspace = args.workspace[:-1]
+    # Handle up
+    if args.workspace == 'up':
+        try:
+            index = workspaces.index(workspace) - 1
+        except ValueError:
+            index = 0
+        args.workspace = '{}:{}'.format(number, workspaces[index])
+    # Handle down
+    if args.workspace == 'down':
+        try:
+            index = (workspaces.index(workspace) + 1) % len(workspaces)
+        except ValueError:
+            index = 0
+        args.workspace = '{}:{}'.format(number, workspaces[index])
+    # Handle number
+    elif args.workspace.find(':') == -1 and workspace != '':
+        args.workspace += ':' + workspace
+
+
+    # Move
+    if args.move:
+        subprocess.call(['i3-msg', 'move', 'container', 'to', 'workspace', args.workspace])
+        if args.follow:
+            subprocess.call(['i3-msg', 'workspace', args.workspace])
+        sys.exit()
+
+    # Switch workspace
+    subprocess.call(['i3-msg', 'workspace', args.workspace])
