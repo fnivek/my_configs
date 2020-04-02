@@ -1,10 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
-import os
-import sys
-import json
-import subprocess
+import i3ipc
 
 
 def parse_args():
@@ -22,87 +19,68 @@ def parse_args():
     return parser.parse_args()
 
 
+def get_workspace_second_key(ws):
+    second_key = 0
+    try:
+        second_key = int(ws.name.split(':')[1])
+    except (ValueError, IndexError):
+        pass
+    return second_key
+
+
 if __name__ == '__main__':
+    # I3 interface
+    i3 = i3ipc.Connection()
+
     # Workspace files
     workspace_file = "/home/fnivek/.i3/resources/workspaces.txt"
-    workspaces = []
+    named_workspaces = []
     with open(workspace_file) as file:
-        workspaces = [line.strip() for line in file]
+        named_workspaces = [line.strip() for line in file]
 
-    # Get active workspaces and sort them
-    active_workspaces = json.loads(subprocess.check_output(['i3-msg', '-t', 'get_workspaces']))
-    active_dict = {}
-    for elem in active_workspaces:
-        name = elem['name']
-        try:
-            number, workspace = name.split(':')
-        except Exception:
-            number = name
-            workspace = ''
-        workspace = str(workspace)
-        number = int(number)
-        try:
-            active_dict[workspace].append(number)
-        except KeyError:
-            active_dict[workspace] = [number]
-    for value in active_dict.values():
-        value.sort()
-
-    # Get current workspace
-    current_workspace = None
-    for elem in active_workspaces:
-        if elem['focused']:
-            current_workspace = elem['name']
-
-    # Get number and name
-    try:
-        number, workspace = current_workspace.split(':')
-    except Exception:
-        number = current_workspace
-        workspace = ''
-    number = int(number)
-    workspace = str(workspace)
+    # Get workspaces and sort them
+    workspaces = i3.get_workspaces()
+    workspaces.sort(key=lambda ws: (ws.num, get_workspace_second_key(ws)))
+    current_workspace = next(filter(lambda ws: ws.focused, workspaces))
+    current_named_workspaces = list(filter(lambda ws: ws.num == current_workspace.num, workspaces))
+    for ws in current_named_workspaces:
+        print(ws.name)
+    index = current_named_workspaces.index(current_workspace)
 
     # Pars args
     args = parse_args()
 
     # Handle previous
+    to_name = current_workspace.name
     if args.workspace == 'prev':
-        index = active_dict[workspace].index(number) - 1
-        args.workspace = '{}:{}'.format(active_dict[workspace][index], workspace)
-        if args.workspace[-1] == ':':
-            args.workspace = args.workspace[:-1]
+        to_name = current_named_workspaces[index - 1].name
     # Handle next
     elif args.workspace == 'next':
-        index = (active_dict[workspace].index(number) + 1) % len(active_dict[workspace])
-        args.workspace = '{}:{}'.format(active_dict[workspace][index], workspace)
-        if args.workspace[-1] == ':':
-            args.workspace = args.workspace[:-1]
+        to_name = current_named_workspaces[(index + 1) % len(current_named_workspaces)].name
     # Handle up
     if args.workspace == 'up':
-        try:
-            index = workspaces.index(workspace) - 1
-        except ValueError:
-            index = 0
-        args.workspace = '{}:{}'.format(number, workspaces[index])
+        name_index = (current_workspace.num - 1) % len(named_workspaces)
+        name = named_workspaces[name_index]
+        to_name = '{}:{}:{}'.format(name_index, get_workspace_second_key(current_workspace), name)
     # Handle down
     if args.workspace == 'down':
-        try:
-            index = (workspaces.index(workspace) + 1) % len(workspaces)
-        except ValueError:
-            index = 0
-        args.workspace = '{}:{}'.format(number, workspaces[index])
+        name_index = (current_workspace.num + 1) % len(named_workspaces)
+        name = named_workspaces[name_index]
+        to_name = '{}:{}:{}'.format(name_index, get_workspace_second_key(current_workspace), name)
     # Handle number
-    elif args.workspace.find(':') == -1 and workspace != '':
-        args.workspace += ':' + workspace
-
+    else:
+        try:
+            to_name = '{}:{}:{}'.format(current_workspace.num,
+                                        int(args.workspace),
+                                        named_workspaces[current_workspace.num])
+        except ValueError:
+            pass
 
     # Move
     if args.move:
-        subprocess.call(['i3-msg', 'move', 'container', 'to', 'workspace', args.workspace])
+        i3.command('move container to workspace {}'.format(to_name))
         if args.follow:
-            subprocess.call(['i3-msg', 'workspace', args.workspace])
-        sys.exit()
-
-    # Switch workspace
-    subprocess.call(['i3-msg', 'workspace', args.workspace])
+            i3.command('workspace {}'.format(to_name))
+    else:
+        # Switch workspace
+        i3.command('workspace {}'.format(to_name))

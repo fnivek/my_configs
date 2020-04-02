@@ -185,7 +185,7 @@ bindsym $mod+6 exec --no-startup-id "$workspace_script 6"
 bindsym $mod+7 exec --no-startup-id "$workspace_script 7"
 bindsym $mod+8 exec --no-startup-id "$workspace_script 8"
 bindsym $mod+9 exec --no-startup-id "$workspace_script 9"
-bindsym $mod+0 exec --no-startup-id "$workspace_script 10"
+bindsym $mod+0 exec --no-startup-id "$workspace_script 0"
 bindsym Control+Mod1+Left exec --no-startup-id "$workspace_script prev"
 bindsym Control+Mod1+Right exec --no-startup-id "$workspace_script next"
 bindsym Control+Mod1+Shift+Left exec --no-startup-id "$workspace_script -m -f prev"
@@ -213,7 +213,7 @@ bindsym $mod+Shift+6 exec --no-startup-id "$workspace_script -m 6"
 bindsym $mod+Shift+7 exec --no-startup-id "$workspace_script -m 7"
 bindsym $mod+Shift+8 exec --no-startup-id "$workspace_script -m 8"
 bindsym $mod+Shift+9 exec --no-startup-id "$workspace_script -m 9"
-bindsym $mod+Shift+0 exec --no-startup-id "$workspace_script -m 10"
+bindsym $mod+Shift+0 exec --no-startup-id "$workspace_script -m 0"
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -254,4 +254,5 @@ bar {
         #status_command SCRIPT_DIR=/home/fnivek/.config/i3blocks-contrib 2>/tmp/i3blocks.err /usr/local/bin/i3blocks -vvv -c /home/fnivek/.dotfiles/my_configs/.config/i3blocks/config | tee /tmp/i3blocks.out
         status_command SCRIPT_DIR=/home/fnivek/.config/i3blocks-contrib i3blocks
         tray_output primary
+        strip_workspace_numbers yes
 }
