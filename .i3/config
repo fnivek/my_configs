@@ -7,8 +7,8 @@ set $mod Mod4
 
 # Startup applications
 exec --no-startup-id "/home/fnivek/.i3/scripts/toggle-touchpad disable"
-exec --no-startup-id i3-msg 'workspace 1:misc; exec /opt/sublime_text/sublime_text'
-exec --no-startup-id i3-msg 'workspace 2:misc; exec /usr/bin/google-chrome'
+exec --no-startup-id i3-msg 'workspace 3001:1:misc; exec /opt/sublime_text/sublime_text'
+exec --no-startup-id i3-msg 'workspace 3002:2:misc; exec /usr/bin/google-chrome'
 exec --no-startup-id /usr/bin/nm-applet
 
 # Make the currently focused window a scratchpad
@@ -185,7 +185,7 @@ bindsym $mod+6 exec --no-startup-id "$workspace_script 6"
 bindsym $mod+7 exec --no-startup-id "$workspace_script 7"
 bindsym $mod+8 exec --no-startup-id "$workspace_script 8"
 bindsym $mod+9 exec --no-startup-id "$workspace_script 9"
-bindsym $mod+0 exec --no-startup-id "$workspace_script 0"
+bindsym $mod+0 exec --no-startup-id "$workspace_script 10"
 bindsym Control+Mod1+Left exec --no-startup-id "$workspace_script prev"
 bindsym Control+Mod1+Right exec --no-startup-id "$workspace_script next"
 bindsym Control+Mod1+Shift+Left exec --no-startup-id "$workspace_script -m -f prev"
@@ -213,7 +213,7 @@ bindsym $mod+Shift+6 exec --no-startup-id "$workspace_script -m 6"
 bindsym $mod+Shift+7 exec --no-startup-id "$workspace_script -m 7"
 bindsym $mod+Shift+8 exec --no-startup-id "$workspace_script -m 8"
 bindsym $mod+Shift+9 exec --no-startup-id "$workspace_script -m 9"
-bindsym $mod+Shift+0 exec --no-startup-id "$workspace_script -m 0"
+bindsym $mod+Shift+0 exec --no-startup-id "$workspace_script -m 10"
 
 # reload the configuration file
 bindsym $mod+Shift+c reload

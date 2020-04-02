@@ -19,13 +19,22 @@ def parse_args():
     return parser.parse_args()
 
 
-def get_workspace_second_key(ws):
-    second_key = 0
+def get_ws_second_key(ws):
+    key = 0
     try:
-        second_key = int(ws.name.split(':')[1])
+        key = int(ws.name.split(':')[1])
     except (ValueError, IndexError):
         pass
-    return second_key
+    return key
+
+
+def get_ws_third_key(ws):
+    key = ''
+    try:
+        key = ws.name.split(':')[2]
+    except IndexError:
+        pass
+    return key
 
 
 if __name__ == '__main__':
@@ -39,12 +48,16 @@ if __name__ == '__main__':
         named_workspaces = [line.strip() for line in file]
 
     # Get workspaces and sort them
+    offset = 1000
     workspaces = i3.get_workspaces()
-    workspaces.sort(key=lambda ws: (ws.num, get_workspace_second_key(ws)))
+    workspaces.sort(key=lambda ws: (ws.num, get_ws_second_key(ws)))
     current_workspace = next(filter(lambda ws: ws.focused, workspaces))
-    current_named_workspaces = list(filter(lambda ws: ws.num == current_workspace.num, workspaces))
-    for ws in current_named_workspaces:
-        print(ws.name)
+    current_ws_name = get_ws_third_key(current_workspace)
+    try:
+        name_index = named_workspaces.index(current_ws_name)
+    except IndexError:
+        name_index = 0
+    current_named_workspaces = list(filter(lambda ws: get_ws_third_key(ws) == current_ws_name, workspaces))
     index = current_named_workspaces.index(current_workspace)
 
     # Pars args
@@ -59,20 +72,23 @@ if __name__ == '__main__':
         to_name = current_named_workspaces[(index + 1) % len(current_named_workspaces)].name
     # Handle up
     if args.workspace == 'up':
-        name_index = (current_workspace.num - 1) % len(named_workspaces)
-        name = named_workspaces[name_index]
-        to_name = '{}:{}:{}'.format(name_index, get_workspace_second_key(current_workspace), name)
+        index = (name_index - 1) % len(named_workspaces)
+        name = named_workspaces[index]
+        key2 = get_ws_second_key(current_workspace)
+        to_name = '{}:{}:{}'.format(index * offset + key2, key2, name)
     # Handle down
     if args.workspace == 'down':
-        name_index = (current_workspace.num + 1) % len(named_workspaces)
-        name = named_workspaces[name_index]
-        to_name = '{}:{}:{}'.format(name_index, get_workspace_second_key(current_workspace), name)
+        index = (name_index + 1) % len(named_workspaces)
+        name = named_workspaces[index]
+        key2 = get_ws_second_key(current_workspace)
+        to_name = '{}:{}:{}'.format(index * offset + key2, key2, name)
     # Handle number
     else:
         try:
-            to_name = '{}:{}:{}'.format(current_workspace.num,
-                                        int(args.workspace),
-                                        named_workspaces[current_workspace.num])
+            num = int(args.workspace)
+            to_name = '{}:{}:{}'.format(name_index * offset + num,
+                                        num,
+                                        current_ws_name)
         except ValueError:
             pass
 
