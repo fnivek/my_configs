@@ -49,23 +49,10 @@ mode "$mode_display" {
 }
 bindsym $mod+Shift+P mode $mode_display
 
-# Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 1 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 1 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle # mute sound
-
-set $mode_audio Audio (Left) Volume Down (Right) Volume Up (m) mute (r) reset
-mode "$mode_audio" {
-    bindsym m exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
-    bindsym Left exec --no-startup-id pactl -- set-sink-volume 0 -5% #decrease sound volume
-    bindsym Right exec --no-startup-id pactl -- set-sink-volume 0 +5% #increase sound volume
-    bindsym r exec --no-startup-id pulseaudio -k && pulseaudio -D
-
-    # Back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+Shift+a mode $mode_audio
+# Audio controls
+bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 5%+ && pkill -RTMIN+10 i3blocks 
+bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 5%- && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioMute exec amixer -q -D pulse sset Master toggle && pkill -RTMIN+10 i3blocks
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
@@ -264,6 +251,7 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+        #status_command SCRIPT_DIR=/home/fnivek/.config/i3blocks-contrib 2>/tmp/i3blocks.err /usr/local/bin/i3blocks -vvv -c /home/fnivek/.dotfiles/my_configs/.config/i3blocks/config | tee /tmp/i3blocks.out
+        status_command SCRIPT_DIR=/home/fnivek/.config/i3blocks-contrib i3blocks
         tray_output primary
 }
