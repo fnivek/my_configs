@@ -55,7 +55,7 @@ if __name__ == '__main__':
     current_ws_name = get_ws_third_key(current_workspace)
     try:
         name_index = named_workspaces.index(current_ws_name)
-    except IndexError:
+    except (IndexError, ValueError):
         name_index = 0
     current_named_workspaces = list(filter(lambda ws: get_ws_third_key(ws) == current_ws_name, workspaces))
     index = current_named_workspaces.index(current_workspace)
