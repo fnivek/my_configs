@@ -15,3 +15,7 @@ function con-wifi() {
 function list-cons() {
   nmcli connection
 }
+
+function host-discovery() {
+  nmap -sP 192.168.1.1/24
+}
