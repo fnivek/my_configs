@@ -7,8 +7,8 @@ set $mod Mod4
 
 # Startup applications
 exec --no-startup-id "/home/fnivek/.i3/scripts/toggle-touchpad disable"
-exec --no-startup-id i3-msg 'workspace 3001:1:<span color='yellow'></span>; exec /opt/sublime_text/sublime_text'
-exec --no-startup-id i3-msg 'workspace 3002:2:<span color='yellow'></span>; exec /usr/bin/google-chrome'
+# exec --no-startup-id i3-msg 'workspace 3001:1:<span color="yellow"></span>; exec /opt/sublime_text/sublime_text'
+# exec --no-startup-id i3-msg 'workspace 3002:2:<span color="yellow"></span>; exec /usr/bin/google-chrome'
 exec --no-startup-id /usr/bin/nm-applet
 
 # Make the currently focused window a scratchpad
