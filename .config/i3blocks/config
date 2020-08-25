@@ -61,13 +61,13 @@ interval=10
 separator=false
 
 [wifi]
-INTERFACE=wlo1
+INTERFACE=wlp0s20f3
 label=wifi 
 interval=10
 separator=false
 
 [ssid]
-INTERFACE=wlo1
+INTERFACE=wlp0s20f3
 interval=10
 
 # CPU usage

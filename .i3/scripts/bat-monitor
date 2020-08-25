@@ -67,7 +67,7 @@ WARN_LIMIT="20"
 SUSPEND_LIMIT="15"
 
 # Suspend command
-SUSPEND_CMD="bash /home/fnivek/.dotfiles/my_configs/.i3/scripts/system suspend"
+SUSPEND_CMD="bash /home/kdfrench/.dotfiles/my_configs/.i3/scripts/system suspend"
 
 # set error message
 MESSAGE="Warning power is ${PERCENT} will suspend at ${SUSPEND_LIMIT}!!!"

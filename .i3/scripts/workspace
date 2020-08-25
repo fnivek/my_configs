@@ -42,7 +42,7 @@ if __name__ == '__main__':
     i3 = i3ipc.Connection()
 
     # Workspace files
-    workspace_file = "/home/fnivek/.i3/resources/workspaces.txt"
+    workspace_file = "/home/kdfrench/.i3/resources/workspaces.txt"
     named_workspaces = []
     with open(workspace_file) as file:
         named_workspaces = [line.strip() for line in file]

@@ -6,7 +6,7 @@
 set $mod Mod4
 
 # Startup applications
-exec --no-startup-id "/home/fnivek/.i3/scripts/toggle-touchpad disable"
+exec --no-startup-id "/home/kdfrench/.i3/scripts/toggle-touchpad disable"
 # exec --no-startup-id i3-msg 'workspace 3001:1:<span color="yellow"></span>; exec /opt/sublime_text/sublime_text'
 # exec --no-startup-id i3-msg 'workspace 3002:2:<span color="yellow"></span>; exec /usr/bin/google-chrome'
 exec --no-startup-id /usr/bin/nm-applet
@@ -33,7 +33,7 @@ bindsym $mod+minus mode $mode_scratchpad
 bindsym $mod+m move workspace to output left
 
 # Toggle display mode
-set $display_script /home/fnivek/.i3/scripts/toggle-displays
+set $display_script /home/kdfrench/.i3/scripts/toggle-displays
 bindsym $mod+p exec --no-startup-id "$display_script toggle"
 set $mode_display Display (t) toggle (a) all (c) clones (i) internal (e) external
 mode "$mode_display" {
@@ -59,8 +59,8 @@ bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
 
 # Touchpad controls
-bindsym XF86TouchpadToggle exec /home/fnivek/.i3/scripts/toggle-touchpad # toggle touchpad
-bindsym $mod+t exec --no-startup-id /home/fnivek/.i3/scripts/toggle-touchpad
+bindsym XF86TouchpadToggle exec /home/kdfrench/.i3/scripts/toggle-touchpad # toggle touchpad
+bindsym $mod+t exec --no-startup-id /home/kdfrench/.i3/scripts/toggle-touchpad
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
@@ -70,7 +70,7 @@ bindsym XF86AudioPrev exec playerctl previous
 
 # System Shutdown Loop
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
-set $system_script /home/fnivek/.i3/scripts/system
+set $system_script /home/kdfrench/.i3/scripts/system
 mode "$mode_system" {
     # bindsym l exec --no-startup-id i3lock -i $lock_image, mode "default"
     bindsym l exec --no-startup-id "$system_script lock", mode "default"
@@ -91,11 +91,11 @@ bindsym $mod+z mode "$mode_system"
 # set $mode_screenshot select (s) full (f) window (w) active (a) section (Shift+s)
 # mode "$mode_screenshot" {
 #     # bindsym l exec --no-startup-id i3lock -i $lock_image, mode "default"
-#     bindsym s exec --no-startup-id exec "/usr/bin/shutter --min_at_startup -e -s -o /home/fnivek/Pictures/screenshots/$nb_name_%y-%m-%d-%T.png", mode "default"
-#     bindsym f exec --no-startup-id exec "/usr/bin/shutter --min_at_startup -e -f -o /home/fnivek/Pictures/screenshots/$nb_name_%y-%m-%d-%T.png", mode "default"
-#     bindsym w exec --no-startup-id exec "/usr/bin/shutter --min_at_startup -e -w -o /home/fnivek/Pictures/screenshots/$nb_name_%y-%m-%d-%T.png", mode "default"
-#     bindsym a exec --no-startup-id exec "/usr/bin/shutter --min_at_startup -e -a -o /home/fnivek/Pictures/screenshots/$nb_name_%y-%m-%d-%T.png", mode "default"
-#     bindsym Shift+s --no-startup-id exec "/usr/bin/shutter --min_at_startup -e --section -o /home/fnivek/Pictures/screenshots/$nb_name_%y-%m-%d-%T.png", mode "default"
+#     bindsym s exec --no-startup-id exec "/usr/bin/shutter --min_at_startup -e -s -o /home/kdfrench/Pictures/screenshots/$nb_name_%y-%m-%d-%T.png", mode "default"
+#     bindsym f exec --no-startup-id exec "/usr/bin/shutter --min_at_startup -e -f -o /home/kdfrench/Pictures/screenshots/$nb_name_%y-%m-%d-%T.png", mode "default"
+#     bindsym w exec --no-startup-id exec "/usr/bin/shutter --min_at_startup -e -w -o /home/kdfrench/Pictures/screenshots/$nb_name_%y-%m-%d-%T.png", mode "default"
+#     bindsym a exec --no-startup-id exec "/usr/bin/shutter --min_at_startup -e -a -o /home/kdfrench/Pictures/screenshots/$nb_name_%y-%m-%d-%T.png", mode "default"
+#     bindsym Shift+s --no-startup-id exec "/usr/bin/shutter --min_at_startup -e --section -o /home/kdfrench/Pictures/screenshots/$nb_name_%y-%m-%d-%T.png", mode "default"
 
 #     # Back to normal: Enter or Escape
 #     bindsym Return mode "default"
@@ -106,7 +106,7 @@ bindsym Print exec --no-startup-id /usr/bin/shutter
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 4
+font pango:monospace 11
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -175,7 +175,7 @@ bindsym $mod+a focus parent
 bindsym $mod+c focus child
 
 # switch to workspace
-set $workspace_script /home/fnivek/.i3/scripts/workspace
+set $workspace_script /home/kdfrench/.i3/scripts/workspace
 bindsym $mod+1 exec --no-startup-id "$workspace_script 1"
 bindsym $mod+2 exec --no-startup-id "$workspace_script 2"
 bindsym $mod+3 exec --no-startup-id "$workspace_script 3"
@@ -251,8 +251,8 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        #status_command SCRIPT_DIR=/home/fnivek/.config/i3blocks-contrib 2>/tmp/i3blocks.err /usr/local/bin/i3blocks -vvv -c /home/fnivek/.dotfiles/my_configs/.config/i3blocks/config | tee /tmp/i3blocks.out
-        status_command SCRIPT_DIR=/home/fnivek/.config/i3blocks-contrib i3blocks
+        #status_command SCRIPT_DIR=/home/kdfrench/.config/i3blocks-contrib 2>/tmp/i3blocks.err /usr/local/bin/i3blocks -vvv -c /home/kdfrench/.dotfiles/my_configs/.config/i3blocks/config | tee /tmp/i3blocks.out
+        status_command SCRIPT_DIR=/home/kdfrench/.config/i3blocks-contrib i3blocks
         tray_output primary
         strip_workspace_numbers yes
 }
