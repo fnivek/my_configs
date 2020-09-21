@@ -1,11 +1,11 @@
 #!/bin/bash
-EXTERNAL_OUTPUT="HDMI-0"
-INTERNAL_OUTPUT="DP-2"
+EXTERNAL_OUTPUT="DP-2-2"
+INTERNAL_OUTPUT="eDP-1"
 
 switch_to() {
     case "$1" in
         all)
-            xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --auto --left-of $INTERNAL_OUTPUT
+            xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --auto --right-of $INTERNAL_OUTPUT
             ;;
         clones)
             xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --auto --same-as $INTERNAL_OUTPUT 
