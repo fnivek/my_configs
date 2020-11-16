@@ -29,18 +29,12 @@ command=${SCRIPT_DIR}/${BLOCK_NAME}/${BLOCK_NAME}
 separator_block_width=15
 markup=none
 
-# Volume indicator
-#
-# The first parameter sets the step (and units to display)
-# The second parameter overrides the mixer selection
-# See the script for details.
-
-[volume]
-label=♪ 
-# label=VOL 
+# Volume
+[volume-pulseaudio]
+# command=$SCRIPT_DIR/volume-pulseaudio
 interval=once
-signal=10
-#STEP=5%
+signal=1
+USE_ALSA_NAME=1
 
 # Memory usage
 #
