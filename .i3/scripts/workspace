@@ -3,6 +3,9 @@
 import argparse
 import i3ipc
 
+workspace_file = "/home/kdfrench/.i3/resources/workspaces.txt"
+last_pose_in_workspace_file = "/home/kdfrench/.i3/resources/last_pose_in_workspace.txt"
+
 
 def parse_args():
     """
@@ -36,16 +39,27 @@ def get_ws_third_key(ws):
         pass
     return key
 
+def read_last_workspace():
+    last_workspace = {}
+    with open(last_pose_in_workspace_file) as file:
+        last_workspace = {workspace: int(num) for workspace, num in [line.strip().split(':') for line in file]}
+    return last_workspace
+
+def write_last_workspace(last_workspace):
+    with open(last_pose_in_workspace_file, 'w') as file:
+        for key, value in last_workspace.items():
+            file.write(f'{key}:{value}\n')
+
 
 if __name__ == '__main__':
     # I3 interface
     i3 = i3ipc.Connection()
 
     # Workspace files
-    workspace_file = "/home/kdfrench/.i3/resources/workspaces.txt"
     named_workspaces = []
     with open(workspace_file) as file:
         named_workspaces = [line.strip() for line in file]
+    last_workspace = read_last_workspace()
 
     # Get workspaces and sort them
     offset = 1000
@@ -74,13 +88,19 @@ if __name__ == '__main__':
     if args.workspace == 'up':
         index = (name_index - 1) % len(named_workspaces)
         name = named_workspaces[index]
-        key2 = get_ws_second_key(current_workspace)
+        try:
+            key2 = last_workspace[name]
+        except KeyError:
+            key2 = get_ws_second_key(current_workspace)
         to_name = '{}:{}:{}'.format(index * offset + key2, key2, name)
     # Handle down
     if args.workspace == 'down':
         index = (name_index + 1) % len(named_workspaces)
         name = named_workspaces[index]
-        key2 = get_ws_second_key(current_workspace)
+        try:
+            key2 = last_workspace[name]
+        except KeyError:
+            key2 = get_ws_second_key(current_workspace)
         to_name = '{}:{}:{}'.format(index * offset + key2, key2, name)
     # Handle number
     else:
@@ -91,6 +111,11 @@ if __name__ == '__main__':
                                         current_ws_name)
         except ValueError:
             pass
+
+    # Save last workspace
+    _, num, name = to_name.split(':')
+    last_workspace[name] = num
+    write_last_workspace(last_workspace)
 
     # Move
     if args.move:
