@@ -1,6 +1,9 @@
 # i3 config file (v4)
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
+#
+# Defines
+set $workspace_script /home/kdfrench/.i3/scripts/workspace
 
 # Use windows key
 set $mod Mod4
@@ -15,11 +18,13 @@ exec --no-startup-id /usr/bin/nm-applet
 bindsym $mod+Shift+minus move scratchpad
 
 # Show the first scratchpad window
-set $mode_scratchpad Todoist (-) term (Return) comms (c)
+set $mode_scratchpad Tasks (-) term (Return) comms (c) music (m) teams (t)
 mode "$mode_scratchpad" {
-    bindsym minus [instance="google-chrome" title=".*Todoist.*"] scratchpad show, mode default
+    bindsym minus exec --no-startup-id i3-msg 'workspace 1:1:<span color="light green"></span>', mode default
+    bindsym c exec --no-startup-id i3-msg 'workspace 2:2:<span color="light green"></span>', mode default
+    bindsym t exec --no-startup-id i3-msg 'workspace 3:3:<span color="light green"></span>', mode default
+    bindsym m exec --no-startup-id i3-msg 'workspace 4:4:<span color="light green"></span>', mode default
     bindsym Return [instance="terminator"] scratchpad show, mode default
-    bindsym c [instance="google-chrome" title="?!.*Todoist.*"] scratchpad show, mode default
 
     # Back to normal: Enter or Escape
     bindsym Escape mode "default"
@@ -175,7 +180,6 @@ bindsym $mod+a focus parent
 bindsym $mod+c focus child
 
 # switch to workspace
-set $workspace_script /home/kdfrench/.i3/scripts/workspace
 bindsym $mod+1 exec --no-startup-id "$workspace_script 1"
 bindsym $mod+2 exec --no-startup-id "$workspace_script 2"
 bindsym $mod+3 exec --no-startup-id "$workspace_script 3"
