@@ -39,7 +39,7 @@ bindsym $mod+m move workspace to output left
 
 # Toggle display mode
 set $display_script /home/kdfrench/.i3/scripts/toggle-displays
-bindsym $mod+p exec --no-startup-id "$display_script toggle"
+# bindsym $mod+p exec --no-startup-id "$display_script toggle"
 set $mode_display Display (t) toggle (a) all (c) clones (i) internal (e) external
 mode "$mode_display" {
     bindsym t exec --no-startup-id "$display_script toggle", mode default
@@ -111,7 +111,8 @@ bindsym Print exec --no-startup-id /usr/bin/shutter
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 11
+# font pango:monospace 11
+font pango:DejaVu Sans Mono, FontAwesome 11
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -218,6 +219,13 @@ bindsym $mod+Shift+7 exec --no-startup-id "$workspace_script -m 7"
 bindsym $mod+Shift+8 exec --no-startup-id "$workspace_script -m 8"
 bindsym $mod+Shift+9 exec --no-startup-id "$workspace_script -m 9"
 bindsym $mod+Shift+0 exec --no-startup-id "$workspace_script -m 10"
+
+# vim style workspace history
+bindsym $mod+i exec "/home/kdfrench/software/i3ipc-python/examples/i3-focus/focus-next.py"
+bindsym $mod+o exec "/home/kdfrench/software/i3ipc-python/examples/i3-focus/focus-prev.py"
+
+# Jump to any window
+bindsym $mod+p exec "/home/kdfrench/software/i3ipc-python/examples/i3-focus/focus-window.py"
 
 # reload the configuration file
 bindsym $mod+Shift+c reload

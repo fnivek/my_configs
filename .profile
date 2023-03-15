@@ -36,6 +36,10 @@ if [ -d "$HOME/go/bin/" ] ; then
 fi
 
 # dotfilter
-if [ -d "$HOME/.dotfiles/bin" ] ; then
-  add_path "$HOME/.dotfiles/bin"
-fi
+# if [ -d "$HOME/.dotfiles/bin" ] ; then
+#   add_path "$HOME/.dotfiles/bin"
+# fi
+source "$HOME/.cargo/env"
+
+# Created by `pipx` on 2022-04-12 22:57:15
+export PATH="$PATH:/home/kdfrench/.local/bin"

@@ -39,8 +39,8 @@ function rosenv() {
   env | grep -i ros
 }
 
-if [ -f /opt/ros/"${ROS_DISTRO}"/setup.bash ]; then
-  source /opt/ros/"${ROS_DISTRO}"/setup.bash
+if [ -f /opt/ros/melodic/setup.bash ]; then
+  source /opt/ros/melodic/setup.bash
 fi
 
 if [[ -e ~/.bash/local_ros.sh ]]; then

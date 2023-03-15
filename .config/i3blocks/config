@@ -35,6 +35,8 @@ markup=none
 interval=once
 signal=1
 USE_ALSA_NAME=1
+LONG_FORMAT="${SYMB} ${VOL}% [${INDEX}]"
+SHORT_FORMAT="${SYMB} ${VOL}% [${INDEX}]"
 
 # Memory usage
 #
@@ -74,12 +76,17 @@ interval=10
 min_width=CPU 100.00%
 #separator=false
 
-[gpu-load]
-label=GPU 
+# [gpu-load]
+# label=GPU 
+# interval=10
+# # min_width=GPU 100% 100% 100% 100%
+# #T_WARN=70
+# #T_CRIT=90
+
+[docker]
+color=#0db7ed
 interval=10
-# min_width=GPU 100% 100% 100% 100%
-#T_WARN=70
-#T_CRIT=90
+LABEL=🐳 
 
 [monitor_manager]
 interval=once
@@ -110,3 +117,5 @@ interval=30
 [time]
 command=date '+%m-%d %H:%M:%S'
 interval=5
+
+

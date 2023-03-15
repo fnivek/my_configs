@@ -15,9 +15,13 @@
   [[default]]
     cursor_color = "#aaaaaa"
     font = Monospace 10
-    scrollback_infinite = True
-    scrollback_lines = 2000
+    scrollback_lines = 10000
     use_system_font = False
   [[float]]
     background_darkness = 0.9
     background_type = transparent
+    cursor_color = "#aaaaaa"
+  [[fontawesome]]
+    cursor_color = "#aaaaaa"
+    font = FontAwesome 10
+    use_system_font = False

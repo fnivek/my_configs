@@ -1,6 +1,17 @@
 #!/bin/bash
 EXTERNAL_OUTPUT="DP-2-2"
+# EXTERNAL_OUTPUT="DP-2-1"
+# EXTERNAL_OUTPUT="HDMI-2"
 INTERNAL_OUTPUT="eDP-1"
+
+# Get all connected monitors
+connected=$(xrandr | grep " connected" | awk '{print $1}')
+for mon in $connected; do
+    if [[ $mon -ne $INTERNAL_OUTPUT ]]; then
+	    EXTERNAL_OUTPUT=$mon
+	    break;
+    fi;
+done
 
 switch_to() {
     case "$1" in
