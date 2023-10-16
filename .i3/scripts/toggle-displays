@@ -7,7 +7,7 @@ INTERNAL_OUTPUT="eDP-1"
 # Get all connected monitors
 connected=$(xrandr | grep " connected" | awk '{print $1}')
 for mon in $connected; do
-    if [[ $mon -ne $INTERNAL_OUTPUT ]]; then
+    if [[ $mon != $INTERNAL_OUTPUT ]]; then
 	    EXTERNAL_OUTPUT=$mon
 	    break;
     fi;
