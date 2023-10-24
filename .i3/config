@@ -20,10 +20,10 @@ bindsym $mod+Shift+minus move scratchpad
 # Show the first scratchpad window
 set $mode_scratchpad Tasks (-) term (Return) comms (c) music (m) teams (t)
 mode "$mode_scratchpad" {
-    bindsym minus exec --no-startup-id i3-msg 'workspace 1:1:<span color="light green"></span>', mode default
-    bindsym c exec --no-startup-id i3-msg 'workspace 2:2:<span color="light green"></span>', mode default
-    bindsym t exec --no-startup-id i3-msg 'workspace 3:3:<span color="light green"></span>', mode default
-    bindsym m exec --no-startup-id i3-msg 'workspace 4:4:<span color="light green"></span>', mode default
+    bindsym minus exec --no-startup-id i3-msg 'workspace 1:1:<span color="light green">Com</span>', mode default
+    bindsym c exec --no-startup-id i3-msg 'workspace 2:2:<span color="light green">Com</span>', mode default
+    bindsym t exec --no-startup-id i3-msg 'workspace 3:3:<span color="light green">Com</span>', mode default
+    bindsym m exec --no-startup-id i3-msg 'workspace 4:4:<span color="light green">Com</span>', mode default
     bindsym Return [instance="terminator"] scratchpad show, mode default
 
     # Back to normal: Enter or Escape
