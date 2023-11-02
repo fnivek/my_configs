@@ -8,7 +8,7 @@ import json
 from argparse import ArgumentParser
 import i3ipc
 
-MAX_WIN_HISTORY = 15
+MAX_WIN_HISTORY = 50
 
 parser = ArgumentParser(prog='i3-app-focus.py', description='''''', epilog='''''')
 parser.add_argument('--socket-file', default='/tmp/i3-app-focus.socket', help='Socket file path')
@@ -27,6 +27,7 @@ class FocusWatcher:
         self.listening_socket.listen(2)
         self.window_list = []
         self.window_list_lock = threading.RLock()
+        self._current_window_in_history = 0
 
     def run(self):
         t_i3 = threading.Thread(target=self._launch_i3)
@@ -42,9 +43,12 @@ class FocusWatcher:
 
         with self.window_list_lock:
             if window_id in self.window_list:
+                if self._current_window_in_history == self.window_list.index(window_id):
+                    return
                 self.window_list.remove(window_id)
 
             self.window_list.insert(0, window_id)
+            self._current_window_in_history = 0
 
             if len(self.window_list) > MAX_WIN_HISTORY:
                 del self.window_list[MAX_WIN_HISTORY:]
@@ -54,6 +58,7 @@ class FocusWatcher:
         with self.window_list_lock:
             if window_id in self.window_list:
                 self.window_list.remove(window_id)
+                self._current_window_in_history = min(self._current_window_in_history, len(self.window_list) - 1)
 
     def _launch_i3(self):
         self.i3.main()
@@ -63,23 +68,34 @@ class FocusWatcher:
 
         def accept(sock):
             conn, addr = sock.accept()
-            tree = self.i3.get_tree()
-            info = []
-            with self.window_list_lock:
-                for window_id in self.window_list:
-                    con = tree.find_by_id(window_id)
-                    if con:
-                        info.append({
-                            "id": con.id,
-                            "window": con.window,
-                            "window_title": con.window_title,
-                            "window_class": con.window_class,
-                            "window_role": con.window_role,
-                            "focused": con.focused
-                        })
+            conn.settimeout(0.01)
+            request = None
+            try:
+                request = conn.recv(4096).decode()
+            except TimeoutError:
+                pass
+            if request == 'next':
+                self.next()
+            if request == 'last':
+                self.last()
+            elif request is None:
+                tree = self.i3.get_tree()
+                info = []
+                with self.window_list_lock:
+                    for window_id in self.window_list:
+                        con = tree.find_by_id(window_id)
+                        if con:
+                            info.append({
+                                "id": con.id,
+                                "window": con.window,
+                                "window_title": con.window_title,
+                                "window_class": con.window_class,
+                                "window_role": con.window_role,
+                                "focused": con.focused
+                            })
 
-            conn.send(json.dumps(info).encode())
-            conn.close()
+                conn.send(json.dumps(info).encode())
+                conn.close()
 
         selector.register(self.listening_socket, selectors.EVENT_READ, accept)
 
@@ -92,6 +108,22 @@ class FocusWatcher:
     def _is_window(con):
         return not con.nodes and con.type == "con" and (con.parent and con.parent.type != "dockarea"
                                                         or True)
+
+    def next(self):
+        if len(self.window_list) == 0:
+            return
+        with self.window_list_lock:
+            self._current_window_in_history = max(self._current_window_in_history - 1, 0)
+            con = self.i3.get_tree().find_by_id(self.window_list[self._current_window_in_history])
+            con.command('focus')
+
+    def last(self):
+        if len(self.window_list) == 0:
+            return
+        with self.window_list_lock:
+            self._current_window_in_history = min(self._current_window_in_history + 1, len(self.window_list) - 1)
+            con = self.i3.get_tree().find_by_id(self.window_list[self._current_window_in_history])
+            con.command('focus')
 
 
 focus_watcher = FocusWatcher()
