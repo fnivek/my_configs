@@ -7,6 +7,9 @@ I am using [dotfiler](https://github.com/svetlyak40wt/dotfiler) to manage my dot
 i3.config - configurations for my i3 window manager
 
 ## Install
-* Add a chron job for ~/.i3/scripts/bat-monitor
-* Install backlight
-* TODO
+git clone https://github.com/svetlyak40wt/dotfiler ~/.dotfiles
+git clone --recursive https://github.com/fnivek/my_configs.git ~/.dotfiles/my_configs
+cd ~/dotfiles/bin
+./dot update
+~/.config/bootstrap.sh
+
