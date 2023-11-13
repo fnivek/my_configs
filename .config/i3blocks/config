@@ -113,9 +113,9 @@ interval=once
 # Battery indicator
 #
 # The battery instance defaults to 0.
-[battery2]
-markup=pango
-interval=30
+# [battery2]
+# markup=pango
+# interval=30
 
 # Date Time
 #
