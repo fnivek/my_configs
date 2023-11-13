@@ -18,7 +18,7 @@ echo \
 sudo apt-get update
 sudo apt install -y \
     terminator \
-    python3-pip
+    python3-pip \
     autogen \
     autoconf \
     build-essential \
