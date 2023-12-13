@@ -26,13 +26,13 @@ mode "$mode_scratchpad" {
     bindsym t exec --no-startup-id i3-msg 'workspace 3:3:<span color="light green">Com</span>', mode default
     bindsym m exec --no-startup-id i3-msg 'workspace 4:4:<span color="light green">Com</span>', mode default
     bindsym Return [instance="terminator"] scratchpad show, mode default
-    bindsym n [instance="code"] scratchpad show, mode default
+    bindsym n [instance="obsidian"] scratchpad show, mode default
 
     # Back to normal: Enter or Escape
     bindsym Escape mode "default"
 }
 bindsym $mod+minus mode $mode_scratchpad
-bindsym $mod+n [instance="code"] scratchpad show, mode default
+bindsym $mod+n [instance="obsidian"] scratchpad show, mode default
 
 # Add a terminal scratchpad
 # bindsym $mod+Shift+t [title="^Term ::"] scratchpad show
