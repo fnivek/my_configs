@@ -32,7 +32,8 @@ mode "$mode_scratchpad" {
     bindsym Escape mode "default"
 }
 bindsym $mod+minus mode $mode_scratchpad
-bindsym $mod+n [instance="obsidian"] scratchpad show, mode default
+bindsym $mod+n [instance="obsidian"] scratchpad show
+bindsym $mod+Shift+n exec --no-startup-id /home/kdfrench/.i3/scripts/sync-notes
 
 # Add a terminal scratchpad
 # bindsym $mod+Shift+t [title="^Term ::"] scratchpad show
