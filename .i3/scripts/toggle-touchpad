@@ -1,7 +1,10 @@
 #!/bin/bash
 # Get the device id
-id="$(xinput list "SynPS/2 Synaptics TouchPad" | head -n 1 | awk '{print $4}')"
-id="${id:3}"
+for col in $(xinput list | grep -i touchpad | xargs); do
+  if [[ "${col:0:3}" == "id=" ]]; then
+    id=${col:3}
+  fi
+done
 
 # Get the device state
 state=`xinput list-props "${id}" | grep "Device Enabled" | grep -o "[01]$"`
