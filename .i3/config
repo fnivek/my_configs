@@ -15,6 +15,13 @@ exec --no-startup-id "/home/kdfrench/.i3/scripts/toggle-touchpad disable"
 exec --no-startup-id /usr/bin/nm-applet
 exec_always --no-startup-id "/home/kdfrench/.i3/scripts/i3-focus/history-server-launch.sh"
 
+# Force windows to specific spots
+for_window [title="Todoist"] move workspace 1:1:<span color="light green">Com</span>
+for_window [title="Outlook"] move workspace 2:2:<span color="light green">Com</span>
+for_window [title="Teams"] move workspace 3:3:<span color="light green">Com</span>
+for_window [title="Music"] move workspace 4:4:<span color="light green">Com</span>
+
+
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
 
