@@ -31,6 +31,8 @@ markup=none
 
 # Volume
 [volume-pulseaudio]
+DEFAULT_COLOR=#cdd6f4
+MUTTED_COLOR=#bac2de
 # command=$SCRIPT_DIR/volume-pulseaudio
 interval=once
 signal=1
@@ -52,7 +54,7 @@ interval=30
 # The address can be forced to IPv4 or IPv6 with -4 or -6 switches.
 [iface]
 #IFACE=wlan0
-color=#00FF00
+color=#a6e3a1
 interval=10
 separator=false
 
@@ -71,6 +73,9 @@ interval=10
 # The script may be called with -w and -c switches to specify thresholds,
 # see the script for details.
 [cpu_usage]
+COLOR_NORMAL=#cdd6f4
+COLOR_WARN=#eba0ac
+COLOR_CRIT=#fab387
 label=CPU 
 interval=10
 min_width=CPU 100.00%
@@ -84,7 +89,7 @@ min_width=CPU 100.00%
 # #T_CRIT=90
 
 [docker]
-color=#0db7ed
+color=#89b4fa
 interval=10
 LABEL=🐳 
 
